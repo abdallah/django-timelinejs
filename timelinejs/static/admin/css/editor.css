@@ -1,0 +1,21 @@
+/* Import standard Dojo CSS files */
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dijit/themes/claro/claro.css";
+
+/* Import custom style sheets for plugins */
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/FindReplace.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/ShowBlockNodes.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/InsertEntity.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/CollapsibleToolbar.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/Blockquote.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/PasteFromWord.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/InsertAnchor.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/TextColor.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/SpellCheck.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/PasteFromWord.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/PasteFromWord.css";
+@import "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojox/editor/plugins/resources/css/PasteFromWord.css";
+
+/* update CSS rules to cater for Django Admin */
+.dijitEditor {display: inline-block;}
+.dijitEditor .dijitToolbar .dijitTextBox {width: 20ex;}
+.dijitEditor .dijitToolbar label {display: inline; float: none; width: auto;}
