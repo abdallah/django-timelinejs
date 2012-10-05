@@ -1,9 +1,6 @@
 {% load static %}
-
     <div id="{{ config.embed_id|default:'timeline-embed' }}"></div>
     <script type="text/javascript" src="{% get_static_prefix %}js/storyjs-embed.js"></script>
-    
-    
     <script>
 		$(document).ready(function() {
 			$.getJSON('{{ config.src }}', 
@@ -27,8 +24,5 @@
                     }
 					createStoryJS(timeline_config);
 				}); 
-			
-			
 		});
 	</script>
-	<!-- <pre>{{config.debug}} </pre> --> 

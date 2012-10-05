@@ -3,6 +3,7 @@ from django.utils import simplejson as json
 from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
 from timelinejs.models import Timeline
+from django.core.urlresolvers import resolve
 
 class JSONResponseMixin(object):
     response_class = HttpResponse
@@ -26,17 +27,28 @@ class TimelineView(SingleObjectMixin, ListView, JSONResponseMixin):
     
     def get_context_data(self, **kwargs):
         kwargs['timeline'] = self.object
-        kwargs['options'] = self.options
+        try:
+            kwargs['options'] = self.options
+        except:
+            pass
         return super(TimelineView, self).get_context_data(**kwargs)
     
     def get_queryset(self):
         self.object = self.get_object(Timeline.objects.all())
-        self.options = self.object.timelineoptions
+        try:
+            self.options = self.object.timelineoptions
+        except:
+            pass
         return self.object.timelineevent_set.all()
     
     def render_to_response(self, context):
-        if self.request.GET.get('format', 'html') != 'json':
+        format = self.request.GET.get('format', 'html')
+        print context
+        try:
+            timeline_id = resolve(self.request.path_info).kwargs['pk']
+        except:
+            pass
+        if format != 'json':
             return ListView.render_to_response(self, context)
         else: 
             return JSONResponseMixin.render_to_response(self, context)
-timeline_view = TimelineView.as_view()
