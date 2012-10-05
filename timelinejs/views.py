@@ -43,12 +43,11 @@ class TimelineView(SingleObjectMixin, ListView, JSONResponseMixin):
     
     def render_to_response(self, context):
         format = self.request.GET.get('format', 'html')
-        print context
         try:
             timeline_id = resolve(self.request.path_info).kwargs['pk']
         except:
             pass
-        if format != 'json':
+        if format!='json':
             return ListView.render_to_response(self, context)
         else: 
             return JSONResponseMixin.render_to_response(self, context)
