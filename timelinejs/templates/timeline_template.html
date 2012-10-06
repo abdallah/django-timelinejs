@@ -1,0 +1,28 @@
+{% load static %}
+    <div id="{{ config.embed_id|default:'timeline-embed' }}"></div>
+    <script type="text/javascript" src="{% get_static_prefix %}js/storyjs-embed.js"></script>
+    <script>
+		$(document).ready(function() {
+			$.getJSON('{{ config.src }}', 
+				function(data){
+					json_obj=data;
+					var timeline_config = {
+                        width:              '{{ config.width|default:"100%" }}',
+                        height:             '{{ config.height|default:600 }}',
+                        source:             json_obj,
+                        embed_id:           '{{ config.embed_id|default:"timeline-embed" }}',              
+                        start_at_end:       {{ config.start_at_end|lower|default:'false' }},                          
+                        start_at_slide:     '{{ config.start_slide|default:0 }}',                           
+                        start_zoom_adjust:  '{{ config.start_zoom|default:0 }}',                            
+                        hash_bookmark:      {{ config.bookmark|lower|default:'false' }},                           
+                        font:               '{{ config.font|default:"Bevan-PotanoSans" }}',             
+                        debug:              {{ config.debug|lower|default:'false' }},                         
+                        lang:               '{{ config.lang|default:"fr"}}',                           
+                        maptype:            '{{ config.maptype|default:"watercolor" }}',               
+                        css:                '{% get_static_prefix %}css/timeline.css',     
+                        js:                 '{% get_static_prefix %}js/timeline-min.js'    
+                    }
+					createStoryJS(timeline_config);
+				}); 
+		});
+	</script>
