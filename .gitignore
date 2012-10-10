@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 timeline.sqlite
 .project
 .pydevproject
 .settings/org.eclipse.core.resources.prefs
+=======
+*.log
+*.pot
+*.pyc
+local_settings.py
+>>>>>>> 9bb38a02115ebbf2ebad32eedd901f1ef1d73659
