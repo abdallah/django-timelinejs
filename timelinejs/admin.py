@@ -1,6 +1,6 @@
 from django.contrib.admin import site, ModelAdmin, StackedInline
 from timelinejs.models import Timeline, TimelineEvent, TimelineOptions
-from timeline.settings import STATIC_URL
+
 
 class CommonMedia:
     js = (
