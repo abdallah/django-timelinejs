@@ -5,6 +5,7 @@ local_settings.py
 manage.py
 timeline
 timeline.sqlite
+*.egg-info
 *.log
 *.pot
 *.pyc
