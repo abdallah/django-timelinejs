@@ -32,7 +32,7 @@ class Timeline(models.Model):
 class TimelineEvent(models.Model):
     timeline = models.ForeignKey(Timeline)
     start_date = models.DateField(help_text='Event start date')
-    end_date = models.DateField(blank=True, help_text='Event end date')
+    end_date = models.DateField(blank=True, null=True, help_text='Event end date')
     headline = models.CharField(max_length=200, blank=True, help_text='Headline for event')
     text = models.TextField(blank=True, help_text='Text description of event')
     asset_media = models.CharField(max_length=200, blank=True, verbose_name='media', help_text='Media to add to even info: Picutre link, YouTube, Wikipedia, etc.')
@@ -42,7 +42,7 @@ class TimelineEvent(models.Model):
     def to_dict(self):
         d = {}
         d['startDate'] = self.start_date.strftime('%Y,%m,%d')
-        d['endDate'] = self.end_date.strftime('%Y,%m,%d')
+        d['endDate'] = self.end_date.strftime('%Y,%m,%d') if self.end_date else d['startDate']
         d['headline'] = self.headline
         d['text'] = self.text
         d['asset'] = {'media': self.asset_media, 'credit': self.asset_credit, 'caption': self.asset_caption }
