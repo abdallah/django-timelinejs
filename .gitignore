@@ -9,3 +9,5 @@ timeline.sqlite
 *.log
 *.pot
 *.pyc
+.idea
+
