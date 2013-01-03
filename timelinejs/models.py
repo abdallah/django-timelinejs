@@ -78,6 +78,7 @@ class TimelineOptions(models.Model):
             ('pt', u'Português'),
             ('nl', u'Dutch'),
             ('cz', u'Czech'),
+            ('no', u'Norwegian'),
             ('dk', u'Danish'),
             ('id', u'Indonesian'),
             ('pl', u'Polish'),
