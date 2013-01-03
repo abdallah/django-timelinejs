@@ -61,6 +61,7 @@ Languages available:
 * `nl` *Dutch*
 * `cz` *Czech*
 * `dk` *Danish*
+* `no` *Norwegian*
 * `id` *Indonesian*
 * `pl` *Polish*
 * `sl` *Slovenian*
