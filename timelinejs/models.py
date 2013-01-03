@@ -21,7 +21,7 @@ class Timeline(models.Model):
         d['asset'] = {'media': self.asset_media, 'credit': self.asset_credit, 'caption': self.asset_caption }
         events = []
         for e in self.timelineevent_set.all():
-            events.append(dict([(attr, str(getattr(e, attr))) for attr in [f.name for f in e._meta.fields]]))
+            events.append(dict([(attr, getattr(e, attr)) for attr in [f.name for f in e._meta.fields]]))
         d['date'] = [ e.to_dict() for e in self.timelineevent_set.all()]
         timeline = {'timeline': d}
         return timeline
