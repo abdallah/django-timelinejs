@@ -26,7 +26,7 @@ class Timeline(models.Model):
         timeline = {'timeline': d}
         return timeline
     
-    def __str__(self):
+    def __unicode__(self):
         return "%s - %s" % (self.start_date, self.headline)
 
 class TimelineEvent(models.Model):
@@ -48,7 +48,7 @@ class TimelineEvent(models.Model):
         d['asset'] = {'media': self.asset_media, 'credit': self.asset_credit, 'caption': self.asset_caption }
         return d
     
-    def __str__(self):
+    def __unicode__(self):
         return "%s - %s %s" % (self.start_date, self.end_date, self.headline)
 
 class TimelineOptions(models.Model):
