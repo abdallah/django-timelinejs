@@ -45,8 +45,8 @@ class TimelineEvent(models.Model):
     
     def to_dict(self):
         d = {}
-        d['startDate'] = self.start_date.strftime('%Y,%m,%d')
-        d['endDate'] = self.end_date.strftime('%Y,%m,%d') if self.end_date else d['startDate']
+        d['startDate'] = self.start_date.isoformat().split('T')[0].replace('-', ',')
+        d['endDate'] = self.end_date.isoformat().split('T')[0].replace('-', ',') if self.end_date else d['startDate']
         d['headline'] = self.headline
         d['text'] = self.text
         d['asset'] = {'media': self.asset_media, 'credit': self.asset_credit, 'caption': self.asset_caption }
