@@ -29,6 +29,10 @@ class Timeline(models.Model):
     def __str__(self):
         return "%s - %s" % (self.start_date, self.headline)
 
+    def __unicode__(self):
+        return self.__str__()
+
+
 class TimelineEvent(models.Model):
     timeline = models.ForeignKey(Timeline)
     start_date = models.DateField(help_text='Event start date')
@@ -50,6 +54,9 @@ class TimelineEvent(models.Model):
     
     def __str__(self):
         return "%s - %s %s" % (self.start_date, self.end_date, self.headline)
+
+    def __unicode__(self):
+        return self.__str__()
 
 class TimelineOptions(models.Model):
     FONT_CHOICES = (
