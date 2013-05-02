@@ -92,7 +92,8 @@ class TimelineOptions(models.Model):
             ('zh-ch', u'中文'),
             ('zh-tw', u'Taiwanese Mandarin'),
             ('ta', u'தமிழ் - Tamil'),
-            ('ar', u'Arabic')
+            ('ar', u'Arabic'),
+            ('mn', u'Mongolian')
         )
     MAP_CHOICES = (
             ('Stamen Maps', 'Stamen Maps'),
