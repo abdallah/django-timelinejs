@@ -41,7 +41,7 @@ def find_data_files(srcdir, *wildcards, **kw):
                     [os.path.basename(f) for f in glob.glob(opj(srcdir, '*'))])
     return file_list
 files = find_data_files('timelinejs/', '*.*')
-print 'files', files
+#print 'files', files
 
 setup(name=NAME,
     version=VERSION,
