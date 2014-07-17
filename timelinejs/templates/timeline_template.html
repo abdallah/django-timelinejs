@@ -3,7 +3,7 @@
     <script type="text/javascript" src="{% get_static_prefix %}js/storyjs-embed.js"></script>
     <script>
 		$(document).ready(function() {
-			$.getJSON('{{ config.src }}', 
+			$.getJSON('{{ config.src }}?format=json', 
 				function(data){
 					json_obj=data;
 					var timeline_config = {
