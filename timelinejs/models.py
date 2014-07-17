@@ -1,7 +1,6 @@
 # coding: utf-8
 from django.db import models
 from django.utils import simplejson
-from djgeojson.fields import PointField
 import ast
 
 class ListField(models.TextField):
