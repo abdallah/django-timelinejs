@@ -29,6 +29,10 @@ class ListField(models.TextField):
         value = self._get_val_from_obj(obj)
         return self.get_db_prep_value(value)
 
+
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^timelinejs\.models\.ListField"])
+
 class Timeline(models.Model):
     headline = models.CharField(max_length=200, help_text='Headline for timeline')
     type = models.CharField(max_length=50, default="default")
