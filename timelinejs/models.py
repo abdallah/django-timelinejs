@@ -1,17 +1,48 @@
 # coding: utf-8
 from django.db import models
 from django.utils import simplejson
+import ast
 
+class ListField(models.TextField):
+    __metaclass__ = models.SubfieldBase
+    description = "Stores a python list"
+
+    def __init__(self, *args, **kwargs):
+        super(ListField, self).__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if not value:
+            value = []
+
+        if isinstance(value, list):
+            return value
+
+        return ast.literal_eval(value)
+
+    def get_prep_value(self, value):
+        if value is None:
+            return value
+
+        return unicode(value)
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_db_prep_value(value)
+
+
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^timelinejs\.models\.ListField"])
 
 class Timeline(models.Model):
     headline = models.CharField(max_length=200, help_text='Headline for timeline')
     type = models.CharField(max_length=50, default="default")
     start_date = models.DateField(blank=True, help_text='Timeline start date')
     text = models.TextField(blank=True, help_text='Description of timeline')
+    center_on = ListField(blank=True, help_text="Center the map on this location when loading. Give point coordinates, eg. [43.881, 3.324]")
     asset_media = models.CharField(max_length=200, blank=True, verbose_name='media', help_text='Media to add to even info: Picutre link, YouTube, Wikipedia, etc.')
     asset_credit = models.CharField(max_length=200, blank=True, verbose_name='credit', help_text='Media credits here')
     asset_caption = models.CharField(max_length=200, blank=True, verbose_name='caption', help_text='Caption for media')
-    
+
     def to_dict(self):
         d = {}
         d['startDate'] = self.start_date.strftime('%Y,%m,%d')
@@ -25,9 +56,13 @@ class Timeline(models.Model):
         d['date'] = [ e.to_dict() for e in self.timelineevent_set.all()]
         timeline = {'timeline': d}
         return timeline
-    
+
     def __str__(self):
         return "%s - %s" % (self.start_date, self.headline)
+
+    def __unicode__(self):
+        return self.__str__()
+
 
 class TimelineEvent(models.Model):
     timeline = models.ForeignKey(Timeline)
@@ -35,27 +70,31 @@ class TimelineEvent(models.Model):
     end_date = models.DateField(blank=True, null=True, help_text='Event end date')
     headline = models.CharField(max_length=200, blank=True, help_text='Headline for event')
     text = models.TextField(blank=True, help_text='Text description of event')
+    location = ListField(blank=True, help_text="Project location. Give point coordinates, eg. [43.881, 3.324]")
     asset_media = models.CharField(max_length=200, blank=True, verbose_name='media', help_text='Media to add to even info: Picutre link, YouTube, Wikipedia, etc.')
     asset_credit = models.CharField(max_length=200, blank=True, verbose_name='credit', help_text='Media credits here')
     asset_caption = models.CharField(max_length=200, blank=True, verbose_name='caption', help_text='Caption for media')
-    
+
     def to_dict(self):
         d = {}
-        d['startDate'] = self.start_date.strftime('%Y,%m,%d')
-        d['endDate'] = self.end_date.strftime('%Y,%m,%d') if self.end_date else d['startDate']
+        d['startDate'] = self.start_date.isoformat().split('T')[0].replace('-', ',')
+        d['endDate'] = self.end_date.isoformat().split('T')[0].replace('-', ',') if self.end_date else d['startDate']
         d['headline'] = self.headline
         d['text'] = self.text
         d['asset'] = {'media': self.asset_media, 'credit': self.asset_credit, 'caption': self.asset_caption }
         return d
-    
+
     def __str__(self):
         return "%s - %s %s" % (self.start_date, self.end_date, self.headline)
+
+    def __unicode__(self):
+        return self.__str__()
 
 class TimelineOptions(models.Model):
     FONT_CHOICES = (
             ('Arvo-PTSans', 'Arvo-PTSans'),
             ('Merriweather-NewsCycle', 'Merriweather-NewsCycle'),
-            ('PoiretOne-Molengo', 'PoiretOne-Molengo'), 
+            ('PoiretOne-Molengo', 'PoiretOne-Molengo'),
             ('PTSerif-PTSans', 'PTSerif-PTSans'),
             ('DroidSerif-DroidSans', 'DroidSerif-DroidSans'),
             ('Lekton-Molengo', 'Lekton-Molengo'),
@@ -92,7 +131,8 @@ class TimelineOptions(models.Model):
             ('zh-ch', u'中文'),
             ('zh-tw', u'Taiwanese Mandarin'),
             ('ta', u'தமிழ் - Tamil'),
-            ('ar', u'Arabic')
+            ('ar', u'Arabic'),
+            ('mn', u'Mongolian')
         )
     MAP_CHOICES = (
             ('Stamen Maps', 'Stamen Maps'),
@@ -112,15 +152,15 @@ class TimelineOptions(models.Model):
                 help_text='Width of timeline DIV')
     height = models.CharField(max_length=10, default='600',
                 help_text='Height of timeline DIV')
-    embed_id = models.CharField(max_length=20, blank=True, 
+    embed_id = models.CharField(max_length=20, blank=True,
                 help_text='ID of timeline DIV')
-    start_at_end = models.BooleanField(default=False, 
+    start_at_end = models.BooleanField(default=False,
                 help_text='Set to true to start the timeline on the last date. default is false')
     start_at_slide = models.IntegerField(default=0,
                 help_text='You can tell TimelineJS to start at a specific slide number default is 0')
     start_zoom_adjust = models.IntegerField(default=0,
                 help_text='This will tweak the default zoom level. Equivalent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out. default is 0')
-    hash_bookmark = models.BooleanField(default=False, 
+    hash_bookmark = models.BooleanField(default=False,
                 help_text='set to true to allow bookmarking slides using the hash tag default is false')
     font = models.CharField(max_length=50, choices=FONT_CHOICES, default='Bevan-PotanoSans',
                 help_text='Font combination options')
@@ -128,12 +168,12 @@ class TimelineOptions(models.Model):
                 help_text='Will log events etc to the console. default is false')
     lang = models.CharField(max_length=6, choices=LANG_CHOICES, default='en',
                 help_text='Localization options. default is English')
-    maptype = models.CharField(max_length=50, choices=MAP_CHOICES, default='watercolor', 
+    maptype = models.CharField(max_length=50, choices=MAP_CHOICES, default='watercolor',
                 help_text='google maps api needed [todo]')
-      
+
     class Meta:
         verbose_name_plural = 'Timeline Options'
-    
+
 #'''JSON Format
 #{
 #    "timeline":

@@ -3,7 +3,7 @@
     <script type="text/javascript" src="{% get_static_prefix %}js/storyjs-embed.js"></script>
     <script>
 		$(document).ready(function() {
-			$.getJSON('{{ config.src }}', 
+			$.getJSON('{{ config.src }}?format=json', 
 				function(data){
 					json_obj=data;
 					var timeline_config = {
@@ -13,8 +13,8 @@
                         embed_id:           '{{ config.embed_id|default:"timeline-embed" }}',              
                         start_at_end:       {{ config.start_at_end|lower|default:'false' }},                          
                         start_at_slide:     '{{ config.start_at_slide|default:0 }}',
-                        start_zoom_adjust:  '{{ config.start_zoom_adjust|default:0 }}',                            
-                        hash_bookmark:      {{ config.bookmark|lower|default:'false' }},                           
+                        start_zoom_adjust:  '{{ config.start_zoom_adjust|default:3 }}',
+                        hash_bookmark:      {{ config.hash_bookmark|lower|default:'true' }},                           
                         font:               '{{ config.font|default:"Bevan-PotanoSans" }}',             
                         debug:              {{ config.debug|lower|default:'false' }},                         
                         lang:               '{{ config.lang|default:"fr"}}',                           

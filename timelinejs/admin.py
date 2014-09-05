@@ -20,7 +20,7 @@ class EventsInline(StackedInline):
     
 class TimelineAdmin(ModelAdmin):
     fieldsets = (
-        (None, {'fields': (('headline', 'start_date'), 'text')}), 
+        (None, {'fields': (('headline', 'start_date', 'center_on'), 'text')}), 
         ('Assets', {
             'classes': ('collapse',),
             'fields': ('asset_media', 'asset_credit', 'asset_caption')

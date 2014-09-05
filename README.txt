@@ -60,6 +60,7 @@ lang Localization default is en Languages available:
     zh-tw Taiwanese Mandarin
     ta தமிழ் - Tamil
     ar Arabic May be issues with right to left (need some help here)
+    mn Mongolian
 
 Help us add more. Grab a copy of a language file and replace it with your language Example language file and find your language's two letter code here
 Start at End
