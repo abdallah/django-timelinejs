@@ -1,5 +1,5 @@
+import json
 from django.http import HttpResponse
-from django.utils import simplejson as json 
 from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
 from timelinejs.models import Timeline
