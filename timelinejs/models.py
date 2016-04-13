@@ -1,14 +1,10 @@
 # coding: utf-8
 from django.db import models
-from django.utils import simplejson
 import ast
 
 class ListField(models.TextField):
     __metaclass__ = models.SubfieldBase
     description = "Stores a python list"
-
-    def __init__(self, *args, **kwargs):
-        super(ListField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
         if not value:
@@ -29,9 +25,6 @@ class ListField(models.TextField):
         value = self._get_val_from_obj(obj)
         return self.get_db_prep_value(value)
 
-
-from south.modelsinspector import add_introspection_rules
-add_introspection_rules([], ["^timelinejs\.models\.ListField"])
 
 class Timeline(models.Model):
     headline = models.CharField(max_length=200, help_text='Headline for timeline')
